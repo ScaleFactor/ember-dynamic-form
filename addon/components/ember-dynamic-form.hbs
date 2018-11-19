@@ -1,0 +1,33 @@
+{{#if (gt formFields.length 0)}}
+<div class="fp-form-wrapper">
+  <div class="fp-form-header">
+    <div class="fp-form-title">
+      {{title}}
+    </div>
+    <div class="fp-form-status">
+      {{completedFieldsCount}} / {{totalFieldsCount}}
+      <progress max="{{totalFieldsCount}}" value="{{completedFieldsCount}}"></progress>
+    </div>
+  </div>
+  <div class="fp-form-body">
+    <table>
+      {{#each formFields as |field| }}
+      <tr>
+        <td class="fp-label">
+          <i  class="fa fa-circle {{if (get completedFields field.id) 'hide-icon'}}" ></i>
+          <span>{{field.question}}</span>
+        </td>
+        <td class="fp-value">
+          {{component (flightpath/get-field-component-name field.valueInfo.kind) field=field value=(get formResponse field.id) customerId=customerId parentComponent=this}}
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+    <div class="fp-form-submit">
+      {{#sf-btn status="primary" action=(action 'save') outline=true}}
+        Save
+      {{/sf-btn}}
+    </div>
+  </div>
+</div>
+{{/if}}
